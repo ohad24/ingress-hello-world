@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-app2
+  name: hello-app2
+  namespace: hello-ingress
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-app2
+  template:
+    metadata:
+      labels:
+        app: hello-app2
+    spec:
+      containers:
+      - image: gcr.io/google-samples/hello-app:2.0
+        name: hello-app2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "0.2"
+          requests:
+            memory: "64Mi"
+            cpu: "10m"

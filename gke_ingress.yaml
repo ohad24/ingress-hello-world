@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gke-hello-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: hello-addr
+    # kubernetes.io/ingress.allow-http: "false"
+    networking.gke.io/v1beta1.FrontendConfig: lb-http2https
+  namespace: hello-ingress
+spec:
+  tls:
+    - secretName: web-tls
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: svc
+            port:
+              number: 8080
+      - path: /v2
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: svc2
+            port:
+              number: 8080
+
+---
+
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: lb-http2https
+  namespace: hello-ingress
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
