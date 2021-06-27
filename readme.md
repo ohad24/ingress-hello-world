@@ -1,8 +1,8 @@
 # Kubernetes ingress hello world
 
-Little example for to deploy 2 deployments, 2 services and ingress on minikube and GKE.  
-This example based on [ingress-minikube](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/) docs.  
-[GKE](https://cloud.google.com/kubernetes-engine) steps a optional for extended deployments.
+Little example explain how to deploy 2 deployments, 2 services and ingress on minikube and GKE.  
+The example based on [ingress-minikube](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/) docs.  
+[GKE](https://cloud.google.com/kubernetes-engine) steps are optional for extended deployments.
 
 
 ## Prerequisite
@@ -132,12 +132,12 @@ Generating a RSA private key
 ...........................................................+++++
 writing new private key to 'privkey.pem'
 
-# create gcp secret
+# create GCP secret
 ❯ create secret tls web-tls \
     --cert fullchain.pem --key privkey.pem -n hello-ingress
 secret/web-tls created
 
-# generate the yaml from the culuster
+# generate the secret YAML from the cluster
 # k get secrets -n hello-ingress web-tls -o yaml > web-tls-secret.yaml
 ```
 
@@ -145,7 +145,7 @@ Then, deploy namespace, deployments and services.
 ```bash
 ❯ k apply -f ns.yaml
 namespace/hello-ingress created
-❯ k apply -f depoyments
+❯ k apply -f deployments
 deployment.apps/hello-app created
 deployment.apps/hello-app2 created
 ❯ k apply -f services
